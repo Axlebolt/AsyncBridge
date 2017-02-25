@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+    <metadata>
+        <id>AsyncBridge.Unofficial</id>
+        <version>0.2.0</version>
+        <authors>Axlebolt</authors>
+        <owners>abirav90</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>
+            AsyncBridge https://www.nuget.org/packages/AsyncBridge.Net35/
+            Replace TaskParallelLibrary with System.Threading.Tasks.Unofficial
+        </description>
+        <copyright>Axlebolt 2017</copyright>
+        <dependencies>
+            <dependency id="System.Threading.Tasks.Unofficial" version="3.1.0"/>
+        </dependencies>
+    </metadata>
+
+    <files>
+        <file src="../src/AsyncBridge.Net35/obj/Release/AsyncBridge.Net35.dll" target="lib/net35"/>
+    </files>
+</package>
