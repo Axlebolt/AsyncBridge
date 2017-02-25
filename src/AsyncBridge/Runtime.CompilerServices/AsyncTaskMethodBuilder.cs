@@ -380,7 +380,8 @@ namespace System.Runtime.CompilerServices
             if (exception == null)
                 throw new ArgumentNullException("exception");
             var completionSource = CompletionSource;
-            var setException = (exception is OperationCanceledException ? completionSource.TrySetCanceled() : completionSource.TrySetException(exception));
+            var exceptionName = exception.GetType().FullName;
+            var setException =(exceptionName =="System.OperationCanceledException"  ? completionSource.TrySetCanceled() : completionSource.TrySetException(exception));
             if (!setException)
                 throw new InvalidOperationException("The Task was already completed.");
         }

@@ -12,3 +12,6 @@ output/
 *[Rr]e[Ss]harper.user
 _ReSharper.*/
 *.DotSettings.user
+
+.idea
+packages

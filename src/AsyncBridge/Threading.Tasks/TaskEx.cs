@@ -146,10 +146,10 @@ namespace System.Threading.Tasks
         /// </returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="dueTime"/> argument must be non-negative or -1 and less than or equal to Int32.MaxValue.
         ///             </exception>
-        public static Task Delay(int dueTime)
-        {
-            return Delay(dueTime, CancellationToken.None);
-        }
+//        public static Task Delay(int dueTime)
+//        {
+//            return Delay(dueTime, CancellationToken.None);
+//        }
 
         /// <summary>
         /// Starts a Task that will complete after the specified due time.
@@ -160,10 +160,10 @@ namespace System.Threading.Tasks
         /// </returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="dueTime"/> argument must be non-negative or -1 and less than or equal to Int32.MaxValue.
         ///             </exception>
-        public static Task Delay(TimeSpan dueTime)
-        {
-            return Delay(dueTime, CancellationToken.None);
-        }
+//        public static Task Delay(TimeSpan dueTime)
+//        {
+//            return Delay(dueTime, CancellationToken.None);
+//        }
 
         /// <summary>
         /// Starts a Task that will complete after the specified due time.
@@ -174,14 +174,14 @@ namespace System.Threading.Tasks
         /// </returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="dueTime"/> argument must be non-negative or -1 and less than or equal to Int32.MaxValue.
         ///             </exception>
-        public static Task Delay(TimeSpan dueTime, CancellationToken cancellationToken)
-        {
-            var timeoutMs = (long)dueTime.TotalMilliseconds;
-            if (timeoutMs < Timeout.Infinite || timeoutMs > int.MaxValue)
-                throw new ArgumentOutOfRangeException("dueTime", ArgumentOutOfRange_TimeoutNonNegativeOrMinusOne);
-            
-            return Delay((int)timeoutMs, cancellationToken);
-        }
+//        public static Task Delay(TimeSpan dueTime, CancellationToken cancellationToken)
+//        {
+//            var timeoutMs = (long)dueTime.TotalMilliseconds;
+//            if (timeoutMs < Timeout.Infinite || timeoutMs > int.MaxValue)
+//                throw new ArgumentOutOfRangeException("dueTime", ArgumentOutOfRange_TimeoutNonNegativeOrMinusOne);
+//
+//            return Delay((int)timeoutMs, cancellationToken);
+//        }
 
         /// <summary>
         /// Starts a Task that will complete after the specified due time.
@@ -192,37 +192,37 @@ namespace System.Threading.Tasks
         /// </returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="dueTime"/> argument must be non-negative or -1 and less than or equal to Int32.MaxValue.
         ///             </exception>
-        public static Task Delay(int dueTime, CancellationToken cancellationToken)
-        {
-            if (dueTime < -1)
-                throw new ArgumentOutOfRangeException("dueTime", ArgumentOutOfRange_TimeoutNonNegativeOrMinusOne);
-            if (cancellationToken.IsCancellationRequested)
-                return s_preCanceledTask;
-            if (dueTime == 0)
-                return s_preCompletedTask;
-            var tcs = new TaskCompletionSource<bool>();
-            var ctr = new CancellationTokenRegistration();
-
-            Timer timer = null;
-            timer = new Timer(_ =>
-            {
-                ctr.Dispose();
-                timer.Dispose();
-                tcs.TrySetResult(true);
-            }, null, Timeout.Infinite, Timeout.Infinite);
-
-            if (cancellationToken.CanBeCanceled)
-            {
-                ctr = cancellationToken.Register(() =>
-                {
-                    timer.Dispose();
-                    tcs.TrySetCanceled();
-                });
-            }
-
-            timer.Change(dueTime, Timeout.Infinite);
-            return tcs.Task;
-        }
+//        public static Task Delay(int dueTime, CancellationToken cancellationToken)
+//        {
+//            if (dueTime < -1)
+//                throw new ArgumentOutOfRangeException("dueTime", ArgumentOutOfRange_TimeoutNonNegativeOrMinusOne);
+//            if (cancellationToken.IsCancellationRequested)
+//                return s_preCanceledTask;
+//            if (dueTime == 0)
+//                return s_preCompletedTask;
+//            var tcs = new TaskCompletionSource<bool>();
+//            var ctr = new CancellationTokenRegistration();
+//
+//            Timer timer = null;
+//            timer = new Timer(_ =>
+//            {
+//                ctr.Dispose();
+//                timer.Dispose();
+//                tcs.TrySetResult(true);
+//            }, null, Timeout.Infinite, Timeout.Infinite);
+//
+//            if (cancellationToken.CanBeCanceled)
+//            {
+//                ctr = cancellationToken.Register(() =>
+//                {
+//                    timer.Dispose();
+//                    tcs.TrySetCanceled();
+//                });
+//            }
+//
+//            timer.Change(dueTime, Timeout.Infinite);
+//            return tcs.Task;
+//        }
 
         /// <summary>
         /// Creates a Task that will complete only when all of the provided collection of Tasks has completed.
